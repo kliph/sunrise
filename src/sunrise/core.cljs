@@ -20,10 +20,12 @@
              :offset "100%"}]
      ]]
    [:g.skybox {}
-    [:rect {:width "100%"
-            :className "sky"
-            :height "50%"
-            :y "0"
-            :x "0"}]]])
+    [:rect.sky {:width "100%"
+                :height "50%"
+                :y "0"
+                :x "0"}]
+    [:circle.sun {:r "10%"
+                  :cx "40%"
+                  :cy "30%"}]]])
 
 (r/render-component [app-container] (by-id "app"))

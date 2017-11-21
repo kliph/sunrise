@@ -13,3 +13,7 @@ html, body, #app {
 .stop2 {
   stop-color: red;
 }
+
+.sun {
+  fill: yellow;
+}
