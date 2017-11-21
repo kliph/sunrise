@@ -1,0 +1,15 @@
+html, body, #app {
+  height: 100%;
+}
+
+.sky {
+  fill: url(#skyGradient);
+}
+
+.stop1 {
+  stop-color: white;
+}
+
+.stop2 {
+  stop-color: red;
+}
