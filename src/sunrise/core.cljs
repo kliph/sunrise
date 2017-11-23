@@ -13,8 +13,16 @@
               (/ base 2))]
     (str "l " dx " " dy)))
 
-(defn mountain-path [n]
+(defn ridge-line [n]
   (clojure.string/join " "(repeatedly n line-delta)))
+
+(defn mountain-path [n width height]
+  (str "M 0 193 "
+       (ridge-line n)
+       "L " width " 193"
+       "V " height
+       "L 0 " height
+       "Z"))
 
 (defn app-container []
   (let [rect (-> (by-id "app")
@@ -46,11 +54,6 @@
                       :cy "30%"}]]
        [:g.foreground {}
         [:path.mountain-1
-         {:d (str "M 0 193 "
-                  (mountain-path 60)
-                  "L " width " 193"
-                  "V " height
-                  "L 0 " height
-                  "Z")}]]])))
+         {:d (mountain-path 60 width height)}]]])))
 
 (r/render-component [app-container] (by-id "app"))
