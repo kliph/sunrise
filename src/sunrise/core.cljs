@@ -6,19 +6,25 @@
 (def by-id goog.dom.getElement)
 (def bounds goog.style.getBounds)
 
-(defn line-delta []
-  (let [base 50
-        dx (rand (/ base 2))
-        dy (- (rand base)
-              (/ base 2))]
-    (str "l " dx " " dy)))
+(defn line-dy [base]
+  (- (rand base)
+     (/ base 2)))
 
-(defn ridge-line [n]
-  (clojure.string/join " "(repeatedly n line-delta)))
+(defn line-dx [base]
+  (/ 25 2))
 
-(defn mountain-path [n width height]
+(defn line-delta [dx dy]
+  (str "l " dx " " dy))
+
+(defn ridge-line [n base]
+  (let [dys (repeatedly n #(line-dy base))
+        dxs (repeatedly n #(line-dx base))
+        line-samples (map line-delta dxs dys)]
+    (clojure.string/join " " line-samples)))
+
+(defn mountain-path [n width height base]
   (str "M 0 193 "
-       (ridge-line n)
+       (ridge-line n base)
        "L " width " 193"
        "V " height
        "L 0 " height
@@ -28,7 +34,9 @@
   (let [rect (-> (by-id "app")
                  bounds)
         width (.-width rect)
-        height (.-height rect)]
+        height (.-height rect)
+        n 60
+        base 10]
     (fn []
       [:svg {:xmlns "http://www.w3.org/2000/svg"
              :width "100%"
@@ -54,6 +62,6 @@
                       :cy "30%"}]]
        [:g.foreground {}
         [:path.mountain-1
-         {:d (mountain-path 60 width height)}]]])))
+         {:d (mountain-path n width height base)}]]])))
 
 (r/render-component [app-container] (by-id "app"))
