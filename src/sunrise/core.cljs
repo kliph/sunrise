@@ -17,15 +17,22 @@
   (str "l " dx " " dy))
 
 (defn ridge-line [n base]
-  (let [dys (repeatedly n #(line-dy base))
+  (let [dys (->> (repeatedly (* 2 n) #(line-dy base))
+                 (partition 2)
+                 (map (fn [[a b]]
+                        (* 0.5 (+ a b)))))
         dxs (repeatedly n #(line-dx base))
         line-samples (map line-delta dxs dys)]
+    (js/console.log  (->> (repeatedly n #(line-dy base))
+                          (partition 2)
+                          (map (fn [[a b]]
+                                 (* 0.5 (+ a b))))))
     (clojure.string/join " " line-samples)))
 
 (defn mountain-path [n width height base]
-  (str "M 0 193 "
+  (str "M 0 173 "
        (ridge-line n base)
-       "L " width " 193"
+       "L " width " 173"
        "V " height
        "L 0 " height
        "Z"))
@@ -54,12 +61,12 @@
          ]]
        [:g.skybox {}
         [:rect.sky {:width "100%"
-                    :height "50%"
+                    :height "60%"
                     :y "0"
                     :x "0"}]
         [:circle.sun {:r "10%"
                       :cx "40%"
-                      :cy "30%"}]]
+                      :cy "25%"}]]
        [:g.foreground {}
         [:path.mountain-1
          {:d (mountain-path n width height base)}]]])))
