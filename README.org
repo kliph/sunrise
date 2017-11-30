@@ -2,4 +2,4 @@
 Procedurally generated sunrises and sunsets
 
 * To start
-=(figwheel-up)=
+=$ lein figwheel=
