@@ -68,11 +68,10 @@
                  :offset "0%"
                  :stop-opacity "0"}]
          [:stop {:className "stop2"
-                 :offset "100%"}]
-         ]]
+                 :offset "60%"}]]]
        [:g.skybox {}
         [:rect.sky {:width "100%"
-                    :height "60%"
+                    :height "100%"
                     :y "0"
                     :x "0"}]
         [:circle.sun {:r "10%"
