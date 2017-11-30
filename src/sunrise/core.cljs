@@ -23,19 +23,29 @@
                         (* 0.5 (+ a b)))))
         dxs (repeatedly n #(line-dx base))
         line-samples (map line-delta dxs dys)]
-    (js/console.log  (->> (repeatedly n #(line-dy base))
-                          (partition 2)
-                          (map (fn [[a b]]
-                                 (* 0.5 (+ a b))))))
     (clojure.string/join " " line-samples)))
 
-(defn mountain-path [n width height base]
-  (str "M 0 173 "
-       (ridge-line n base)
-       "L " width " 173"
-       "V " height
-       "L 0 " height
-       "Z"))
+(defn mountain-path [n width height base nth-mountain]
+  (let [y (+ 190 (* nth-mountain 30))]
+    (str "M 0 "
+         y
+         (ridge-line n base)
+         "L " width " "
+         y
+         "V " height
+         "L 0 " height
+         "Z")))
+
+(defn mountains [n width height base n-mountains]
+  (map
+   (fn [x]
+     (let [name (str "mountain-" x)]
+       [:path
+        {:className name
+         :key name
+         :d (mountain-path n width height base x)
+         :opacity 0.5}]))
+   (range n-mountains)))
 
 (defn app-container []
   (let [rect (-> (by-id "app")
@@ -43,7 +53,8 @@
         width (.-width rect)
         height (.-height rect)
         n 60
-        base 10]
+        base 10
+        n-mountains 4]
     (fn []
       [:svg {:xmlns "http://www.w3.org/2000/svg"
              :width "100%"
@@ -68,7 +79,6 @@
                       :cx "40%"
                       :cy "25%"}]]
        [:g.foreground {}
-        [:path.mountain-1
-         {:d (mountain-path n width height base)}]]])))
+        (mountains n width height base n-mountains)]])))
 
 (r/render-component [app-container] (by-id "app"))
