@@ -26,7 +26,7 @@
     (clojure.string/join " " line-samples)))
 
 (defn mountain-path [n width height base nth-mountain]
-  (let [y (+ 190 (* nth-mountain 30))]
+  (let [y (+ (* height 0.4) (* nth-mountain 30))]
     (str "M 0 "
          y
          (ridge-line n base)
