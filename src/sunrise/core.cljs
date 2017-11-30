@@ -1,10 +1,14 @@
 (ns sunrise.core
-  (:require [reagent.core :as r]
-            [goog.dom]
-            [goog.style]))
+  (:require [reagent.core :as r]))
 
-(def by-id goog.dom.getElement)
-(def bounds goog.style.getBounds)
+(defn get-window-dimensions []
+  (let [width (.-innerWidth js/window)
+        height (.-innerHeight js/window)]
+    {:width width :height height}))
+
+(def display-state (r/atom {:window (get-window-dimensions)}))
+
+(.addEventListener js/window "resize" #(swap! display-state assoc :window (get-window-dimensions)))
 
 (defn line-dy [base]
   (- (rand base)
@@ -48,36 +52,34 @@
    (range n-mountains)))
 
 (defn app-container []
-  (let [rect (-> (by-id "app")
-                 bounds)
-        width (.-width rect)
-        height (.-height rect)
+  (let [state @display-state
+        width (get-in state [:window :width])
+        height (get-in state [:window :height])
         n 60
         base 10
         n-mountains 4]
-    (fn []
-      [:svg {:xmlns "http://www.w3.org/2000/svg"
-             :width "100%"
-             :height "100%"}
-       [:defs {}
-        [:linearGradient#skyGradient {:x1 "0"
-                                      :y1 "0"
-                                      :x2 "0"
-                                      :y2 "1"}
-         [:stop {:className "stop1"
-                 :offset "0%"
-                 :stop-opacity "0"}]
-         [:stop {:className "stop2"
-                 :offset "60%"}]]]
-       [:g.skybox {}
-        [:rect.sky {:width "100%"
-                    :height "100%"
-                    :y "0"
-                    :x "0"}]
-        [:circle.sun {:r "10%"
-                      :cx "40%"
-                      :cy "25%"}]]
-       [:g.foreground {}
-        (mountains n width height base n-mountains)]])))
+    [:svg {:xmlns "http://www.w3.org/2000/svg"
+            :width "100%"
+            :height "100%"}
+      [:defs {}
+      [:linearGradient#skyGradient {:x1 "0"
+                                    :y1 "0"
+                                    :x2 "0"
+                                    :y2 "1"}
+        [:stop {:className "stop1"
+                :offset "0%"
+                :stop-opacity "0"}]
+        [:stop {:className "stop2"
+                :offset "60%"}]]]
+      [:g.skybox {}
+      [:rect.sky {:width "100%"
+                  :height "100%"
+                  :y "0"
+                  :x "0"}]
+      [:circle.sun {:r "10%"
+                    :cx "40%"
+                    :cy "25%"}]]
+      [:g.foreground {}
+        (mountains n width height base n-mountains)]]))
 
-(r/render-component [app-container] (by-id "app"))
+(r/render-component [app-container] (.getElementById js/document "app"))
