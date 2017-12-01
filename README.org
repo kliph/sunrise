@@ -1,5 +1,8 @@
 * sunrise
 Procedurally generated sunrises and sunsets
 
-* To start
+** To start from within a repl in the =dev-repl= namespace
 =(figwheel-up)=
+
+** To start up figwheel and repl from within a shell
+=$ lein figwheel=

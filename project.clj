@@ -6,15 +6,16 @@
   :clean-targets ^{:protect false} [:target-path "out" "resources/public/js"]
   :min-lein-version "2.5.3"
   :repl-options {:init-ns dev.repl}
-  :dependencies [[org.clojure/clojure "1.9.0-beta1"]
-                 [org.clojure/clojurescript "1.9.908"]
+  :dependencies [[org.clojure/clojure "1.9.0-RC2"]
+                 [org.clojure/clojurescript "1.9.946"]
                  [reagent "0.8.0-alpha1"]
                  [compojure "1.6.0"]
                  [ring/ring-jetty-adapter "1.6.2"]
                  [ring/ring-ssl "0.3.0"]
                  [environ "1.1.0"]]
   :plugins [[environ/environ.lein "0.3.1"]
-            [lein-cljsbuild "1.1.7"]]
+            [lein-cljsbuild "1.1.7"]
+            [lein-figwheel "0.5.13"]]
   :hooks [environ.leiningen.hooks]
   :figwheel {:css-dirs ["resources/public/css"]
              :server-port 3450}
