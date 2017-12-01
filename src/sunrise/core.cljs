@@ -3,6 +3,6 @@
             [sunrise.component :as component]
             [sunrise.state]))
 
-(.addEventListener js/window "resize" #(swap! sunrise.state/display-state assoc :window (sunrise.state/get-window-dimensions)))
+(.addEventListener js/window "resize" sunrise.state/update!)
 
 (reagent/render-component [component/app-container] (.getElementById js/document "app"))
