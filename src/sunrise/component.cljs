@@ -1,5 +1,6 @@
 (ns sunrise.component
-  (:require [sunrise.core :as core]))
+  (:require [reagent.core :as reagent]
+            [sunrise.state]))
 
 (defn line-dy [base]
   (- (rand base)
@@ -43,7 +44,7 @@
    (range n-mountains)))
 
 (defn app-container []
-  (let [state @core/display-state
+  (let [state @sunrise.state/display-state
         width (get-in state [:window :width])
         height (get-in state [:window :height])
         n 60
@@ -72,4 +73,3 @@
                     :cy "25%"}]]
       [:g.foreground {}
         (mountains n width height base n-mountains)]]))
-
