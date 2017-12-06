@@ -8,7 +8,7 @@
         height (.-innerHeight js/window)]
     {:width width :height height}))
 
-(defn update-window-state
+(defn update-window-state []
   (state/update-window! (get-window-dimensions)))
 
 (.addEventListener js/window "resize" update-window-state)
