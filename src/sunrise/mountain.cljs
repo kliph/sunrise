@@ -10,7 +10,7 @@
 (defn line-delta [dx dy]
   (str "l " dx " " dy))
 
-(defn ridge-line [n-points base]
+(defn ridge-line [{:keys [n-points base]}]
   (let [dys (->> (repeatedly (* 2 n-points) #(line-dy base))
                  (partition 2)
                  (map (fn [[a b]]
@@ -19,24 +19,25 @@
         line-samples (map line-delta dxs dys)]
     (clojure.string/join " " line-samples)))
 
-(defn mountain-path [n-points width height base nth-mountain]
+(defn mountain-path [{:keys [n-points width height base nth-mountain] :as params}]
   (let [y (+ (* height 0.4) (* nth-mountain 30))]
     (str "M 0 "
          y
-         (ridge-line n-points base)
+         (ridge-line params)
          "L " width " "
          y
          "V " height
          "L 0 " height
          "Z")))
 
-(defn mountains [n-points width height base n-mountains]
+(defn mountains [{:keys [n-points width height base n-mountains] :as params}]
   (map
    (fn [x]
      (let [name (str "mountain-" x)]
        [:path
         {:className name
          :key name
-         :d (mountain-path n-points width height base x)
+         :d (mountain-path (-> params
+                               (assoc :nth-mountain x)))
          :opacity 0.5}]))
    (range n-mountains)))
