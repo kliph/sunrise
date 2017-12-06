@@ -13,11 +13,16 @@
                      Math/floor
                      int)
         base 10
-        n-mountains 4]
+        n-mountains 4
+        mountain-params {:n-points n-points
+                         :width width
+                         :height height
+                         :base base
+                         :n-mountains n-mountains}]
     [:svg {:xmlns "http://www.w3.org/2000/svg"
            :width "100%"
            :height "100%"}
      (skybox/svg-defs)
      (skybox/skybox)
      [:g.foreground {}
-      (mountain/mountains n-points width height base n-mountains)]]))
+      (mountain/mountains mountain-params)]]))
