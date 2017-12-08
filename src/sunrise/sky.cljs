@@ -3,7 +3,7 @@
 
 (defn svg-defs [colors]
   [:defs {}
-   [:linearGradient#skyGradient
+   [:linearGradient#sky-gradient
     {:x1 "0" :y1 "0"
      :x2 "0" :y2 "1"}
 
@@ -20,6 +20,6 @@
      (svg-defs colors)
      [:rect.sky {:width "100%"
                  :height "100%"
-                 :fill "url(#skyGradient)"
+                 :fill "url(#sky-gradient)"
                  :y "0"
                  :x "0"}]]))

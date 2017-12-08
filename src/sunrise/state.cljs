@@ -5,7 +5,7 @@
   {:window nil
    :colors {:horizon "#e09d83"
             :zenith "#3e4962"
-            :sun-center "white"
+            :sun-center "#fffaea"
             :sun-rim "#ffc10a"}})
 
 (def display-state (reagent/atom initial-state))
