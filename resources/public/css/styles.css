@@ -4,19 +4,3 @@ html, body, #app {
   padding: 0;
   overflow: hidden;
 }
-
-.sky {
-  fill: url(#skyGradient);
-}
-
-.stop1 {
-  stop-color: white;
-}
-
-.stop2 {
-  stop-color: red;
-}
-
-.sun {
-  fill: yellow;
-}

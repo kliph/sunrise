@@ -1,6 +1,9 @@
-(ns sunrise.sun)
+(ns sunrise.sun
+  (:require [sunrise.state :as state]))
 
 (defn sun []
-  [:circle.sun {:r "10%"
-                :cx "40%"
-                :cy "25%"}])
+  (let [colors (@state/display-state :colors)]
+    [:circle.sun {:r "10%"
+                  :cx "40%"
+                  :fill (colors :sun-center)
+                  :cy "25%"}]))
